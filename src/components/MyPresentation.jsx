@@ -3,8 +3,8 @@ import pptxgen from "pptxgenjs";
 import Logo from "../images/pgfIcon.png";
 import backgroundImagePath from "../images/1.jpg";
 import WordImagePath from "../images/B4.jpg";
-import Live from "../images/live.png";
-import Record from "../images/recording.png";
+// import Live from "../images/live.png";
+// import Record from "../images/recording.png";
 
 const MyPresentation = () => {
   const [fileContent, setFileContent] = useState("");
