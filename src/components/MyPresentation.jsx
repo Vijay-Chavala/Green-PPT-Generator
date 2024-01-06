@@ -3,7 +3,7 @@ import pptxgen from "pptxgenjs";
 import Logo from "../images/pgfIcon.png";
 import backgroundImagePath from "../images/1.jpg";
 import WordImagePath from "../images/B4.jpg";
-// import Live from "../images/live.png";
+import Live from "../images/live.gif";
 // import Record from "../images/recording.png";
 
 const MyPresentation = () => {
@@ -50,12 +50,19 @@ const MyPresentation = () => {
         w: "5%", // Width (adjust as needed)
         h: "10%", // Height (adjust as needed)
       });
+      slide.addImage({
+        path: Live,
+        x: "90%", // Center horizontally
+        y: "4%", // Top-aligned
+        w: "7%", // Width (adjust as needed)
+        h: "5%", // Height (adjust as needed)
+      });
       // slide.addImage({
       //   path: Live,
       //   x: "92%", // Center horizontally
       //   y: "5%", // Top-aligned
-      //   w: "5%", // Width (adjust as needed)
-      //   h: "3.5%", // Height (adjust as needed)
+      //   w: "auto", // Width (adjust as needed)
+      //   h: "auto", // Height (adjust as needed)
       // });
       // slide.addImage({
       //   path: Record,
@@ -85,7 +92,7 @@ const MyPresentation = () => {
         align: "center", // Center the text horizontally
         valign: "middle", // Center the text vertically
         w: "100%", // Full width
-        color:bibleEncountered?"#ffffff": "#ffffff", // White color in hexadecimal
+        color: bibleEncountered ? "#ffffff" : "#ffffff", // White color in hexadecimal
         bold: true, // Make the text bold
         // outline: {
         //   color: "#000000", // Color of the text stroke (black in hexadecimal)
