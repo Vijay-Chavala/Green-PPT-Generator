@@ -1,0 +1,50 @@
+/* MyPresentation.css */
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  .presentation-container {
+    text-align: center;
+  }
+  
+  .dropzone {
+    border: 2px dashed #aaa;
+    padding: 20px;
+    cursor: pointer;
+    transition: border 0.3s ease;
+    margin-bottom: 20px; /* Added spacing between dropzone and button */
+  }
+  
+  .dropzone.active {
+    border: 2px dashed #00fe3b;
+  }
+  
+  button {
+    background-color: #00fe3b;
+    color: #ffffff;
+    padding: 12px 24px; /* Increased padding for a more spacious button */
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-left: 10px; /* Added spacing between button and dropzone */
+  }
+  
+  button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  button:hover {
+    background-color: #00cc2b;
+  }
+/*    */

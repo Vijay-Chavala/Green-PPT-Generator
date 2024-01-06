@@ -1,29 +1,84 @@
 import React, { useState } from "react";
 import pptxgen from "pptxgenjs";
+import { useDropzone } from "react-dropzone";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { TailSpin } from "react-loader-spinner";
+
 import Logo from "../images/pgfIcon.png";
 import backgroundImagePath from "../images/1.jpg";
 import WordImagePath from "../images/B4.jpg";
 import Live from "../images/live.gif";
-// import Record from "../images/recording.png";
 
-const MyPresentation = () => {
+import "./MyPresentation.css"; // Create a CSS file for styling
+
+const MyPresentationWrapper = () => {
   const [fileContent, setFileContent] = useState("");
+  const [uploading, setUploading] = useState(false);
+  const [downloading, setDownloading] = useState(false);
+  const [fileName, setFileName] = useState("");
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
+  const onDrop = (acceptedFiles) => {
+    setUploading(true); // Add this line to set uploading state
+    const file = acceptedFiles[0];
+    const reader = new FileReader();
 
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const content = e.target.result;
-        setFileContent(content);
-      };
+    reader.onload = (e) => {
+      const content = e.target.result;
+      setFileContent(content);
+    };
 
-      reader.readAsText(file);
-    }
+    reader.readAsText(file);
+
+    setFileName(file.name);
+    setUploading(false);
+
   };
 
-  const generatePresentation = () => {
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    accept: ".txt",
+    maxFiles: 1,
+    maxSize: 1024 * 1024, // 1MB
+    onDropRejected: () => {
+      toast.error("Invalid file. Please upload a valid .txt file.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        newestOnTop: false,
+        closeOnClick: true,
+        rtl: false,
+        pauseOnFocusLoss: false,
+        draggable: true,
+        pauseOnHover: false,
+        type: "error",
+        color:"white"
+
+      });
+    },
+  });
+
+  const generatePresentation = async () => {
+    if (!fileContent) {
+      toast.error("Please upload a file before generating the presentation.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        newestOnTop: false,
+        closeOnClick: true,
+        rtl: false,
+        pauseOnFocusLoss: false,
+        draggable: true,
+        pauseOnHover: false,
+        type: "error",
+        color:"white"
+      });
+      return;
+    }
+    setUploading(false); // Reset uploading state
+
+    setDownloading(true);
+
     const pptx = new pptxgen();
     const lines = fileContent.split("\n");
 
@@ -33,44 +88,30 @@ const MyPresentation = () => {
       background: { color: "#00fe3b" },
     });
 
-    let bibleEncountered = false; // Move the initialization outside the loop
+    let bibleEncountered = false;
 
     lines.forEach((line) => {
       if (line.trim() === "Bible") {
         bibleEncountered = true;
       }
 
-      const slide = pptx.addSlide("MasterSlide"); // Use the defined master slide
-      console.log(line, "line");
+      const slide = pptx.addSlide("MasterSlide");
 
       slide.addImage({
         path: Logo,
-        x: "4%", // Center horizontally
-        y: "5%", // Top-aligned
-        w: "5%", // Width (adjust as needed)
-        h: "10%", // Height (adjust as needed)
+        x: "4%",
+        y: "5%",
+        w: "5%",
+        h: "10%",
       });
+
       slide.addImage({
         path: Live,
-        x: "90%", // Center horizontally
-        y: "4%", // Top-aligned
-        w: "7%", // Width (adjust as needed)
-        h: "5%", // Height (adjust as needed)
+        x: "90%",
+        y: "4%",
+        w: "7%",
+        h: "5%",
       });
-      // slide.addImage({
-      //   path: Live,
-      //   x: "92%", // Center horizontally
-      //   y: "5%", // Top-aligned
-      //   w: "auto", // Width (adjust as needed)
-      //   h: "auto", // Height (adjust as needed)
-      // });
-      // slide.addImage({
-      //   path: Record,
-      //   x: "90%", // Center horizontally
-      //   y: "5.5%", // Top-aligned
-      //   w: "1.5%", // Width (adjust as needed)
-      //   h: "2.5%", // Height (adjust as needed)
-      // });
 
       if (line.trim().length !== 0) {
         slide.addImage({
@@ -83,34 +124,90 @@ const MyPresentation = () => {
         });
       }
 
+      slide.addText("PGF Telugu Church Bangalore", {
+        x: "45%",
+        y: "56%",
+        fontSize: 12,
+        fontFace: "Microsoft YaHei UI",
+        align: "center",
+        color: "#ffffff",
+        bold: true,
+        underline: true,
+        outline: { color: "#000000", size: 0.1 },
+      });
+
+      slide.addText("9  8  4  5  7  5  4  5  1  5", {
+        x: "45%",
+        y: "60%",
+        fontSize: 12,
+        fontFace: "Microsoft YaHei UI",
+        align: "center",
+        color: "#ffffff",
+        bold: true,
+        outline: { color: "#000000", size: 0.1 },
+      });
+
       slide.addText(line, {
-        x: "c", // Center horizontally
-        y: "99%", // 92% from the top (adjust as needed)
-        // fontSize: bibleEncountered ? 28 : 25,
+        x: "c",
+        y: "99%",
         fontSize: 25,
         fontFace: bibleEncountered ? "Mallanna" : "Potti Sreeramulu",
-        align: "center", // Center the text horizontally
-        valign: "middle", // Center the text vertically
-        w: "100%", // Full width
-        color: bibleEncountered ? "#ffffff" : "#ffffff", // White color in hexadecimal
-        bold: true, // Make the text bold
-        // outline: {
-        //   color: "#000000", // Color of the text stroke (black in hexadecimal)
-        //   size: 0.5, // Size of the text stroke
-        // },
+        align: "center",
+        valign: "middle",
+        w: "100%",
+        color: bibleEncountered ? "#ffffff" : "#ffffff",
+        bold: true,
       });
     });
 
-    // Save the presentation to a file or display it
+    await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulating delay
     pptx.writeFile("presentation.pptx");
+    setDownloading(false);
+    // Show success message after downloading
+    toast.success("Presentation generated successfully!", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      newestOnTop: false,
+      closeOnClick: true,
+      rtl: false,
+      pauseOnFocusLoss: false,
+      draggable: true,
+      pauseOnHover: false,
+      type: "success",
+    });
+    setTimeout(() => {
+      setFileContent("");
+      setFileName("")
+
+    }, 0);
   };
 
   return (
-    <div>
-      <input type="file" onChange={handleFileChange} />
-      <button onClick={generatePresentation}>Generate PowerPoint</button>
+    <div className="presentation-container">
+      <div
+        {...getRootProps()}
+        className={`dropzone ${isDragActive ? "active" : ""}`}
+      >
+        <input {...getInputProps()} />
+        {fileName && <p>Uploaded File: {fileName}</p>}
+        <p>Drag & drop or click to select a .txt file</p>
+      </div>
+      {uploading && (
+        <TailSpin type="Oval" color="#00BFFF" height={30} width={30} />
+      )}
+      <button
+        onClick={generatePresentation}
+        disabled={uploading || downloading}
+      >
+        Generate PowerPoint
+      </button>
+      {downloading && (
+        <TailSpin type="Oval" color="#00BFFF" height={30} width={30} />
+      )}
+      <ToastContainer />
     </div>
   );
 };
 
-export default MyPresentation;
+export default MyPresentationWrapper;
