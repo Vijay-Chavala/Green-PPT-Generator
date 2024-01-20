@@ -98,7 +98,7 @@ const MyPresentationWrapper = () => {
       // Add PGF logo to the slide
       slide.addImage({
         path: Logo,
-        x: "4%", // X-coordinate of the top-left corner of the image
+        x: "2%", // X-coordinate of the top-left corner of the image
         y: "3%", // Y-coordinate of the top-left corner of the image
         w: "4.5%", // Width of the image
         h: "10%", // Height of the image
@@ -107,7 +107,7 @@ const MyPresentationWrapper = () => {
       // Add "Live" gif to the slide
       slide.addImage({
         path: Live,
-        x: "90%", // X-coordinate of the top-left corner of the image
+        x: "92%", // X-coordinate of the top-left corner of the image
         y: "4%", // Y-coordinate of the top-left corner of the image
         w: "7%", // Width of the image
         h: "5%", // Height of the image
