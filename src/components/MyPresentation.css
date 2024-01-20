@@ -48,3 +48,15 @@ body {
     background-color: #00cc2b;
   }
 /*    */
+/* MyPresentation.css */
+
+
+.carousel-container {
+  width: 80%; /* Adjust the width as needed */
+  margin: auto; /* Center the carousel */
+}
+
+.carousel-image {
+  width: 100%; /* Make sure the images take the full width of the container */
+  height: 200px; /* Maintain the aspect ratio of the images */
+}
