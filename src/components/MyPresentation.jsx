@@ -154,7 +154,7 @@ const MyPresentationWrapper = () => {
       slide.addText(line, {
         x: "c", // Center the text horizontally
         y: "99%", // Y-coordinate of the text box (near the bottom)
-        fontSize: 25, // Font size
+        fontSize: bibleEncountered ? 20 : 22, // Font size
         fontFace: bibleEncountered ? "Mallanna" : "Potti Sreeramulu", // Font family
         align: "center", // Align the text to the center
         valign: "middle", // Vertically align the text to the middle
