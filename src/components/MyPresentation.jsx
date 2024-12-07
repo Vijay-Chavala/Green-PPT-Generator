@@ -5,10 +5,13 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { TailSpin } from "react-loader-spinner";
 
-import Logo from "../images/pgfIcon.png";
-import backgroundImagePath from "../images/1.jpg";
+// import Logo from "../images/pgfIcon.png";
+import backgroundImagePath from "../images/christmas11.jpg";
+import SevenfoldPraise from "../images/SevenfoldPraise3.png";
 import WordImagePath from "../images/B4.jpg";
-import Live from "../images/live.gif";
+// import Live from "../images/live.gif";
+// import RaviAnnaImg from "../images/RaviAnna.png";
+// import LowerThirdImg from "../images/LTAddress2.png";
 
 import "./MyPresentation.css"; // Create a CSS file for styling
 
@@ -87,75 +90,122 @@ const MyPresentationWrapper = () => {
     });
 
     let bibleEncountered = false;
+    let sevenfoldPraiseEncountered = false;
 
     lines.forEach((line) => {
       if (line.trim() === "Bible") {
         bibleEncountered = true;
+      } else if (line.trim() === "Seven-fold-Praise") {
+        sevenfoldPraiseEncountered = true;
       }
 
       const slide = pptx.addSlide("MasterSlide");
 
       // Add PGF logo to the slide
-      slide.addImage({
-        path: Logo,
-        x: "2%", // X-coordinate of the top-left corner of the image
-        y: "3%", // Y-coordinate of the top-left corner of the image
-        w: "4.5%", // Width of the image
-        h: "10%", // Height of the image
-      });
+      // slide.addImage({
+      //   path: Logo,
+      //   x: "2%", // X-coordinate of the top-left corner of the image
+      //   y: "3%", // Y-coordinate of the top-left corner of the image
+      //   w: "4.5%", // Width of the image
+      //   h: "10%", // Height of the image
+      // });
 
       // Add "Live" gif to the slide
-      slide.addImage({
-        path: Live,
-        x: "92%", // X-coordinate of the top-left corner of the image
-        y: "4%", // Y-coordinate of the top-left corner of the image
-        w: "7%", // Width of the image
-        h: "5%", // Height of the image
-      });
+      // slide.addImage({
+      //   path: Live,
+      //   x: "92%", // X-coordinate of the top-left corner of the image
+      //   y: "4%", // Y-coordinate of the top-left corner of the image
+      //   w: "7%", // Width of the image
+      //   h: "5%", // Height of the image
+      // });
+
+      const selectBgImage = () => {
+        if (bibleEncountered) {
+          return WordImagePath;
+        } else if (sevenfoldPraiseEncountered) {
+          return SevenfoldPraise;
+        } else {
+          return backgroundImagePath;
+        }
+      };
+      const selectFontFamily = () => {
+        if (bibleEncountered) {
+          return "Mallanna";
+        } else if (sevenfoldPraiseEncountered) {
+          return "Ramabhadra";
+        } else {
+          return "Potti Sreeramulu";
+        }
+      };
+
+      const selectFontSize = () => {
+        if (bibleEncountered) {
+          return 19;
+        } else if (sevenfoldPraiseEncountered) {
+          return 23;
+        } else {
+          return 20;
+        }
+      };
+
+      const selectBgImageHeight = () => {
+        if (sevenfoldPraiseEncountered) {
+          return "15%";
+        } else {
+          return "10%";
+        }
+      };
+      const selectBgImageYcoordinate = () => {
+        if (sevenfoldPraiseEncountered) {
+          return "86.94%";
+        } else {
+          return "89.94%";
+        }
+      };
 
       // Add background image based on whether the line represents "Bible" or other content
       if (line.trim().length !== 0) {
         slide.addImage({
-          path: bibleEncountered ? WordImagePath : backgroundImagePath,
-          y: "89.94%", // Y-coordinate of the bottom edge of the image
+          path: selectBgImage(),
+          y: selectBgImageYcoordinate(), // Y-coordinate of the bottom edge of the image
           x: "c", // Center the image horizontally
           w: "100%", // Width of the image
-          h: "10%", // Height of the image
+          h: selectBgImageHeight(), // Height of the image
           align: "center", // Align the image to the center
         });
       }
 
       // Add text for the church name
-      slide.addText("PGF Telugu Church Bangalore", {
-        x: "45%", // X-coordinate of the text box
-        y: "56%", // Y-coordinate of the text box
-        fontSize: 12, // Font size
-        fontFace: "Microsoft YaHei UI", // Font family
-        align: "center", // Align the text to the center
-        color: "#ffffff", // Text color
-        bold: true, // Bold text
-        underline: true, // Underline text
-        outline: { color: "#000000", size: 0.1 }, // Outline color and size
-      });
+      // slide.addText("PGF Telugu Church Bangalore", {
+      //   x: "45%", // X-coordinate of the text box
+      //   y: "56%", // Y-coordinate of the text box
+      //   fontSize: 12, // Font size
+      //   fontFace: "Microsoft YaHei UI", // Font family
+      //   align: "center", // Align the text to the center
+      //   color: "#ffffff", // Text color
+      //   bold: true, // Bold text
+      //   underline: true, // Underline text
+      //   outline: { color: "#000000", size: 0.1 }, // Outline color and size
+      // });
 
       // Add contact number
-      slide.addText("9  8  4  5  7  5  4  5  1  5", {
-        x: "45%", // X-coordinate of the text box
-        y: "60%", // Y-coordinate of the text box
-        fontSize: 12, // Font size
-        fontFace: "Microsoft YaHei UI", // Font family
-        align: "center", // Align the text to the center
-        color: "#ffffff", // Text color
-        bold: true, // Bold text
-        outline: { color: "#000000", size: 0.1 }, // Outline color and size
-      });
+      // slide.addText("9  8  4  5  7  5  4  5  1  5", {
+      //   x: "45%", // X-coordinate of the text box
+      //   y: "60%", // Y-coordinate of the text box
+      //   fontSize: 12, // Font size
+      //   fontFace: "Microsoft YaHei UI", // Font family
+      //   align: "center", // Align the text to the center
+      //   color: "#ffffff", // Text color
+      //   bold: true, // Bold text
+      //   outline: { color: "#000000", size: 0.1 }, // Outline color and size
+      // });
 
       // Add the content of the current line to the slide
       slide.addText(line, {
         x: "c", // Center the text horizontally
         y: "99%", // Y-coordinate of the text box (near the bottom)
-        fontSize: bibleEncountered ? 20 : 22, // Font size
-        fontFace: bibleEncountered ? "Mallanna" : "Potti Sreeramulu", // Font family
+        fontSize: selectFontSize(), // Font size
+        fontFace: selectFontFamily(), // Font family
         align: "center", // Align the text to the center
         valign: "middle", // Vertically align the text to the middle
         w: "100%", // Width of the text box
